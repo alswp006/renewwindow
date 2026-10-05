@@ -203,15 +203,14 @@ describe("packet-0005: 계약 폼·전환 금액·기준금리·통보 폼 검�
   });
 
   describe("AC-5: validateNoticeForm 통보 폼 검증", () => {
-    it("AC-5[P0]: should reject noticeDate in the future", () => {
+    it("AC-5[P0]: should accept noticeDate in the future", () => {
 
       const result = validateNoticeForm({
         noticeDate: "2026-10-07",
         increaseRate: "5",
       }, { endDate: "2027-10-06", deposit: 200000000, monthlyRent: 500000 }, "2026-10-06");
 
-      expect(result.ok).toBe(false);
-      expect((result as any).errors.noticeDate).toBe("통보일은 오늘 이전 날짜로 입력해주세요");
+      expect(result.ok).toBe(true);
     });
 
     it("AC-5[P0]: should reject noticeDate with invalid format", () => {

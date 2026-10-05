@@ -20,9 +20,8 @@ function errorsOf(
 describe("validateNoticeForm — 공통", () => {
   it("통보일 미래·형식 오류", () => {
     expect(
-      errorsOf({ noticeDate: "2026-10-07", depositRate: "5", rentRate: "5" })
-        .errors.noticeDate,
-    ).toBe("통보일은 오늘 이전 날짜로 입력해주세요");
+      validateNoticeForm({ noticeDate: "2026-10-07", depositRate: "5", rentRate: "5" }, contract, TODAY).ok,
+    ).toBe(true);
     const r = errorsOf({ noticeDate: "", depositRate: "5", rentRate: "5" });
     expect(r.errors.noticeDate).toBe(
       "통보일을 YYYY-MM-DD 형식으로 입력해주세요",

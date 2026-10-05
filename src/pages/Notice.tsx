@@ -82,7 +82,7 @@ export default function Notice() {
       {check && contract ? (
         <NoticeResultCard contract={contract} check={check} />
       ) : (
-        <Paragraph.Text typography="t6" color="var(--adaptiveGrey600)">
+        <Paragraph.Text typography="t6" color="var(--adaptiveGrey700)">
           {EMPTY_MESSAGE}
         </Paragraph.Text>
       )}
@@ -91,7 +91,7 @@ export default function Notice() {
         법률 자문이 아닌 참고용 계산이에요
       </Paragraph.Text>
       {/* 하단 고정 CTA에 가려지지 않게 여백 */}
-      <Spacing size={96} />
+      <Spacing size={144} />
     </ScreenScaffold>
   );
 }

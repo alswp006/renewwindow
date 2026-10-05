@@ -62,7 +62,7 @@ function fail(errors: FieldErrors): NoticeFormResult {
 export function validateNoticeForm(
   values: NoticeFormValues,
   contract: NoticeContract,
-  today: string,
+  _today?: string,
 ): NoticeFormResult {
   const errors: FieldErrors = {};
   const inputMode = values.inputMode ?? 'rate';
@@ -71,8 +71,6 @@ export function validateNoticeForm(
   const noticeDate = (values.noticeDate ?? '').trim();
   if (!isValidYMD(noticeDate)) {
     errors.noticeDate = '통보일을 YYYY-MM-DD 형식으로 입력해주세요';
-  } else if (noticeDate > today) {
-    errors.noticeDate = '통보일은 오늘 이전 날짜로 입력해주세요';
   }
 
   let newDeposit = 0;

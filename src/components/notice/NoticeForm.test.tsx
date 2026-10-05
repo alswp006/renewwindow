@@ -46,13 +46,10 @@ describe("NoticeForm", () => {
     expect(mockLogClick).toHaveBeenCalledWith("notice_check_submit");
   });
 
-  it("미래·빈 통보일은 통보일 help에 문구가 보이고 onValid는 0회다", () => {
+  it("빈 통보일은 통보일 help에 문구가 보이고 onValid는 0회다", () => {
     const onValid = renderForm();
-    change(/통보일/, "20261007");
     change(/보증금 인상률/, "4");
     change(/월세 인상률/, "5");
-    submit();
-    expect(screen.getByText("통보일은 오늘 이전 날짜로 입력해주세요")).toBeInTheDocument();
     change(/통보일/, "");
     submit();
     expect(screen.getByText("통보일을 YYYY-MM-DD 형식으로 입력해주세요")).toBeInTheDocument();
