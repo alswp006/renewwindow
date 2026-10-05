@@ -144,7 +144,8 @@ export default function Home() {
             description="만기일만 넣으면 갱신 요구 마감일을 알려드려요"
             action={
               <Button
-                variant="weak"
+                variant="fill"
+                size="large"
                 onClick={() => {
                   fireHaptic('success');
                   addContract();

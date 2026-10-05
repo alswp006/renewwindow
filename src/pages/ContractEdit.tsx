@@ -35,10 +35,7 @@ export default function ContractEdit() {
   const contract = isNew ? undefined : existing.contract;
 
   const top = (
-    <Top
-      title={<Top.TitleParagraph>갱신체크</Top.TitleParagraph>}
-      subtitleBottom={<Top.SubtitleParagraph>{isNew ? '계약 등록' : '계약 수정'}</Top.SubtitleParagraph>}
-    />
+    <Top title={<Top.TitleParagraph>{isNew ? '계약 등록' : '계약 수정'}</Top.TitleParagraph>} />
   );
 
   if (status === 'not_found') {
@@ -67,6 +64,8 @@ export default function ContractEdit() {
 
   return (
     <ScreenScaffold top={top}>
+      {/* 스캐폴드 좌우 16px + TextField 내장 20px = 36px로 CTA(20px)와 어긋난다 → 스캐폴드 패딩을 상쇄 */}
+      <div style={{ margin: '0 -16px' }}>
       {status === 'loading' ? (
         <ContractForm key="loading" loading onSubmit={handleSubmit} />
       ) : (
@@ -85,8 +84,7 @@ export default function ContractEdit() {
           }
         />
       )}
-      {/* 하단 고정 저장 CTA에 마지막 행이 가려지지 않게 여백 */}
-      <Spacing size={96} />
+      </div>
     </ScreenScaffold>
   );
 }

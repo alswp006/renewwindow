@@ -40,10 +40,9 @@ beforeEach(() => {
 });
 
 describe('ContractEdit', () => {
-  it('신규 모드: 부제 "계약 등록"과 전체폭 저장 CTA, 삭제 버튼 없음', async () => {
+  it('신규 모드: 제목 "계약 등록"과 전체폭 저장 CTA, 삭제 버튼 없음', async () => {
     renderAt('/contracts/new');
     expect(await screen.findByText('계약 등록')).toBeInTheDocument();
-    expect(screen.getByText('갱신체크')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: '저장' })).toBeInTheDocument();
     expect(screen.queryByRole('button', { name: '계약 삭제' })).toBeNull();
   });
