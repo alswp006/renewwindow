@@ -274,6 +274,9 @@ export interface RouteState {
   styles/
     globals.css
     reward-ad.css
+  test/
+    compliance.test.ts
+    flow.test.tsx
   types/
   vite-env.d.ts
 
@@ -289,7 +292,7 @@ export interface RouteState {
 - review.ts: export function requestReviewOnce(key: string = REVIEW_REQUESTED_KEY): void
 - settingsStorage.ts: export const SETTINGS_KEY = 'renewwindow:settings:v1'; export const SETTINGS_CORRUPT_KEY = 'renewwindow:settings:corrupt'; export const CHECKLIST_KEY = 'renewwindow:checklist:v1'; export const CHECKLIST_CORRUPT_KEY = 'renewwindow:checklist:corrupt'; export function loadSettings(): Settings; export function saveSettings(settings: Settings): SaveResult; export function loadChecklist(): ChecklistState; export function saveChecklist(contractId: string, checkedIds: string[]): SaveResult
 - share.ts: export interface ShareAppOptions; export async function shareApp(opts: ShareAppOptions): Promise<void>
-- storage.ts: export function getItem<T>(key: string): T | null; export function setItem<T>(key: string, value: T): void; export function removeItem(key: string): void; export const CONTRACTS_KEY = 'renewwindow:contr...
+- storage.ts: export function getItem<T>(key: string): T | null; export function setItem<T>(key: string, value: T): void; export function removeItem(key: string): void...
 CRITICAL: Before creating any new function, type, or component, check the list above. If something similar exists, import and use it.
 
 ## Already Implemented (do NOT duplicate or overwrite)
@@ -311,6 +314,7 @@ CRITICAL: Before creating any new function, type, or component, check the list a
 - 0015: 결과 화면 (/contracts/:id) — 조립·리워드 게이트·배너·공유 (files: src/pages/Result.tsx, src/pages/Result.test.tsx)
 - 0018: 통보 점검 화면 (/contracts/:id/notice) (files: src/pages/Notice.tsx, src/pages/Notice.test.tsx)
 - 0019: 라우팅 연결 (src/App.tsx 단일 소유) (files: src/App.tsx, src/App.test.tsx)
+- 0020: 검수 컴플라이언스 점검·전체 흐름 E2E·빌드 타깃 (files: src/test/compliance.test.ts, src/test/flow.test.tsx, vite.config.ts)
 
 ## Available exports from existing files
 // src/App.tsx
