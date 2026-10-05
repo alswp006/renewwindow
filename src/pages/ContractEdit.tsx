@@ -1,14 +1,50 @@
-// @ai-factory:placeholder
-// 배선 선행(wiring-first)이 깐 자리 페이지다 — App.tsx에 `/contract-edit`로 이미 연결돼 있다.
-// 이 화면을 담당하는 패킷은 이 파일을 **통째로 교체**하라(위 마커 주석 포함 — 마커가 남으면 산출물로 인정되지 않는다).
-import { PageShell } from "../components/PageShell";
+import { useParams, useNavigate } from 'react-router-dom';
+import { Paragraph, Spacing, Top } from '@toss/tds-mobile';
+import { ScreenScaffold } from '@/components/ScreenScaffold';
+import { NotFoundState } from '@/components/NotFoundState';
+import { useContract } from '@/hooks/useContracts';
+import { paths } from '@/constants/routes';
+
 export default function ContractEdit() {
+  const { id } = useParams<{ id?: string }>();
+  const navigate = useNavigate();
+
+  const isNew = !id;
+  const { status, contract } = isNew ? { status: 'ready' as const, contract: undefined } : useContract(id);
+
+  const top = (
+    <Top
+      title={<Top.TitleParagraph>갱신체크</Top.TitleParagraph>}
+      lower={
+        isNew ? (
+          <Paragraph.Text typography="t5" color="var(--adaptiveGrey600)">
+            계약 등록
+          </Paragraph.Text>
+        ) : (
+          <Paragraph.Text typography="t5" color="var(--adaptiveGrey600)">
+            계약 수정
+          </Paragraph.Text>
+        )
+      }
+    />
+  );
+
+  if (!isNew && status === 'not_found') {
+    return (
+      <ScreenScaffold top={top}>
+        <NotFoundState testId="contract-edit-not-found" onBack={() => navigate(paths.home(), { replace: true })} />
+      </ScreenScaffold>
+    );
+  }
+
   return (
-    <PageShell>
-      <main data-testid="placeholder-contract-edit">
-        <h1>계약 입력 화면 , )</h1>
-        <p>이 화면은 준비 중이에요.</p>
-      </main>
-    </PageShell>
+    <ScreenScaffold top={top}>
+      <Spacing size={16} />
+      {/* TODO: Implement contract edit form */}
+      <Paragraph.Text typography="t6" color="var(--adaptiveGrey600)">
+        계약 정보 입력 폼 준비 중
+      </Paragraph.Text>
+      <Spacing size={16} />
+    </ScreenScaffold>
   );
 }

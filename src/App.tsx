@@ -20,9 +20,11 @@ export default function App() {
   return (
     // @ai-factory:providers — 전역 Provider는 <Routes>를 감싸는 이 자리에 둔다(main.tsx는 @AI:ANCHOR, 수정 금지).
     <Routes>
+      {/* 경로는 src/constants/routes.ts의 paths와 일치. '/contracts/new'는 ':id'보다 먼저 선언한다. */}
       <Route path="/" element={<Home />} />
-      <Route path="/contract-edit" element={<ContractEdit />} />
+      <Route path="/contracts/new" element={<ContractEdit key="new" />} />
       <Route path="/contracts/:id" element={<Result />} />
+      <Route path="/contracts/:id/edit" element={<ContractEdit key="edit" />} />
       <Route path="/contracts/:id/notice" element={<Notice />} />
       {DevTdsGallery && (
         <Route
