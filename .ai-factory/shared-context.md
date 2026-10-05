@@ -222,6 +222,10 @@ export interface RouteState {
     law.ts
     routes.ts
   hooks/
+    hooks.test.tsx
+    useChecklist.ts
+    useContracts.ts
+    useSettings.ts
   lib/
     analytics.ts
     contract.ts
@@ -272,7 +276,7 @@ export interface RouteState {
 - settingsStorage.ts: export const SETTINGS_KEY = 'renewwindow:settings:v1'; export const SETTINGS_CORRUPT_KEY = 'renewwindow:settings:corrupt'; export const CHECKLIST_KEY = 'renewwindow:checklist:v1'; export const CHECKLIST_CORRUPT_KEY = 'renewwindow:checklist:corrupt'; export function loadSettings(): Settings; export function saveSettings(settings: Settings): SaveResult; export function loadChecklist(): ChecklistState; export function saveChecklist(contractId: string, checkedIds: string[]): SaveResult
 - share.ts: export interface ShareAppOptions; export async function shareApp(opts: ShareAppOptions): Promise<void>
 - storage.ts: export function getItem<T>(key: string): T | null; export function setItem<T>(key: string, value: T): void; export function removeItem(key: string): void; export const CONTRACTS_KEY = 'renewwindow:contracts:v1'; export const CONTRACTS_CORRUPT_KEY = 'renewwindow:contracts:corrupt'; export type ContractDraft = Omit<Contract, 'id' | 'createdAt' | 'updatedAt'> &; export interface SaveContractResponse extends SaveContractResult; export function loadContracts(): LoadContractsResult
-- types.ts: export interface LandlordNotice; export interface Contract; export interfa...
+- types....
 CRITICAL: Before creating any new function, type, or component, check the list above. If something similar exists, import and use it.
 
 ## Already Implemented (do NOT duplicate or overwrite)
@@ -281,6 +285,7 @@ CRITICAL: Before creating any new function, type, or component, check the list a
 - 0003: 금액 엔진·표기 포맷(format.ts) (files: src/lib/money.ts, src/lib/format.ts, src/lib/money.test.ts, src/lib/format.test.ts)
 - 0004: 계약·설정·체크리스트 localStorage 저장소 (files: src/lib/storage.ts, src/lib/settingsStorage.ts, src/lib/storage.test.ts, src/lib/settingsStorage.test.ts)
 - 0005: 계약 폼·전환 금액·기준금리·통보 폼 검증 (files: src/lib/validation.ts, src/lib/noticeValidation.ts, src/lib/validation.test.ts, src/lib/noticeValidation.test.ts)
+- 0006: 상태 훅 — useContracts·useContract·useSettings·useChecklist (files: src/hooks/useContracts.ts, src/hooks/useSettings.ts, src/hooks/useChecklist.ts, src/hooks/hooks.test.tsx)
 
 ## Available exports from existing files
 // src/App.tsx
@@ -346,13 +351,15 @@ export const CHECKLIST_ITEMS: ChecklistItem[] = [
 // src/constants/routes.ts
 export const paths = {
 
-// src/lib/analytics.ts
-export type LogFields = Record<string, string | number | boolean | null>;
-export const DWELL_MS = 3000;
-export function fireAndForget(call: () => unknown): void {
-export function logScreen(page: string, extra?: LogFields): void {
-export function logClick(name: string, extra?: LogFields): void {
-export function logImpression(name: strin
+// src/hooks/useChecklist.ts
+export interface UseChecklistResult {
+export function useChecklist(contractId: string): UseChecklistResult {
+
+// src/hooks/useContracts.ts
+export type ContractsStatus = 'loading' | 'ready' | 'error';
+export interface UseContractsResult {
+export function useContracts(): UseContractsResult {
+export type ContractStatus = 'loading' | 
 
 ## Memory Index (자동 학습 — 힌트로만 사용, 실제 코드 확인 필수)
 
