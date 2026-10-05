@@ -11,3 +11,10 @@
  src/pages/ContractEdit.tsx      | 103 +++++++++++++++++++--
  3 files changed, 291 insertions(+), 10 deletions(-)
 
+
+## 라우팅 연결 (src/App.tsx 단일 소유) — fix loop 2026-10-05T17:22:10.015Z
+- 시도 횟수: 1
+- 트리아지: trivial (1 minor test failures)
+- 에러 변화:
+  Attempt 1: initial errors — tsc:0|lint:-|test:1
+- 비용: $0.6383
