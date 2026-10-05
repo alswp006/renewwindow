@@ -1,0 +1,37 @@
+{
+  "koreanName": "갱신체크",
+  "englishName": "RenewWindow",
+  "appName": "renewwindow",
+  "ageRating": "전체",
+  "appType": "비게임",
+  "supportEmail": "support@aifactory.dev",
+  "category": {
+    "primary": "생활",
+    "secondary": "주거"
+  },
+  "subtitle": "월세 갱신 기간과 상한금액",
+  "description": "계약 만기일을 입력하면 갱신 요구 가능 기간(만기 6개월 전부터 2개월 전까지)의 시작·마감일이 D-day로 표시됩니다. 현재 보증금·월세를 넣으면 5% 상한 기준 최대 인상 금액을 계산해줍니다. 집주인이 통보한 인상률을 입력하면 상한 초과 여부를 바로 확인할 수 있고, 보증금을 월세로 바꾼다면 법정 전환율로 얼마까지 가능한지 시뮬레이션합니다. 여러 계약을 등록해 가장 가까운 갱신 창구 순으로 정렬할 수 있습니다.",
+  "searchKeywords": [
+    "갱신체크",
+    "월세 갱신",
+    "계약 갱신",
+    "5% 상한",
+    "전월세",
+    "보증금",
+    "월세 계산",
+    "계약갱신청구권"
+  ],
+  "keyFeatures": [
+    "갱신 기간 D-day",
+    "5% 상한 인상금액",
+    "보증금→월세 환산",
+    "인상안 검증",
+    "다중 계약 관리"
+  ],
+  "_notes": {
+    "appTypeSuspected": false,
+    "appTypeReasons": [],
+    "reviewLevel": null,
+    "reviewReasons": []
+  }
+}
