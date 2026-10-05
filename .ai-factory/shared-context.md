@@ -232,6 +232,8 @@ export interface RouteState {
     money.ts
     notice.test.ts
     notice.ts
+    noticeValidation.test.ts
+    noticeValidation.ts
     renewal.test.ts
     renewal.ts
     review.ts
@@ -242,6 +244,8 @@ export interface RouteState {
     storage.ts
     types.ts
     utils.ts
+    validation.test.ts
+    validation.ts
   main.tsx
   pages/
     ContractEdit.tsx
@@ -262,15 +266,13 @@ export interface RouteState {
 - format.ts: export function formatKRW(amount: number): string; export function digitsOnly(raw: string): string; export function formatNumberInput(raw: string): string; export function formatRate(rate: number): string; export function formatPercent2(percent: number): string; export function formatDday(days: number): string
 - money.ts: export function computeCap(deposit: number, monthlyRent: number): CapResult; export function computeConversionRate(baseRatePercent: number): number; export function computeConversion(amount: number, ratePercent: number): number; export function buildConversionResult( deposit: number, monthlyRent: number, conversionAmount: number, ratePercent: numb; export function computeScenarios( deposit: number, monthlyRent: number, ratePercent: number, ): ScenarioRow[]
 - notice.ts: export function computeNoticeCheck( contract: ContractInfo, notice: NoticeInfo, ): NoticeCheck | InvalidDate
+- noticeValidation.ts: export interface NoticeFormValues; export type NoticeContract = Pick<Contract, 'endDate' | 'deposit' | 'monthlyRent'>; export type ValidNotice = Pick< LandlordNotice, 'noticeDate' | 'newDeposit' | 'newMonthlyRent' | 'inputMode' >; export type NoticeFormResult = |; export function validateNoticeForm( values: NoticeFormValues, contract: NoticeContract, today: string, ): NoticeFormResu
 - renewal.ts: export function computeRenewalWindow(endDate: string, today: string): RenewalWindow | InvalidDate; export function sortContracts<T extends; export function getNoticeTiming(endDate: string, noticeDate: string): NoticeTiming | InvalidDate; export function isWithinOneYearOfIncrease( lastIncreaseDate: string | null | undefined, noticeDate: string, ): boolean
 - review.ts: export function requestReviewOnce(key: string = REVIEW_REQUESTED_KEY): void
 - settingsStorage.ts: export const SETTINGS_KEY = 'renewwindow:settings:v1'; export const SETTINGS_CORRUPT_KEY = 'renewwindow:settings:corrupt'; export const CHECKLIST_KEY = 'renewwindow:checklist:v1'; export const CHECKLIST_CORRUPT_KEY = 'renewwindow:checklist:corrupt'; export function loadSettings(): Settings; export function saveSettings(settings: Settings): SaveResult; export function loadChecklist(): ChecklistState; export function saveChecklist(contractId: string, checkedIds: string[]): SaveResult
 - share.ts: export interface ShareAppOptions; export async function shareApp(opts: ShareAppOptions): Promise<void>
 - storage.ts: export function getItem<T>(key: string): T | null; export function setItem<T>(key: string, value: T): void; export function removeItem(key: string): void; export const CONTRACTS_KEY = 'renewwindow:contracts:v1'; export const CONTRACTS_CORRUPT_KEY = 'renewwindow:contracts:corrupt'; export type ContractDraft = Omit<Contract, 'id' | 'createdAt' | 'updatedAt'> &; export interface SaveContractResponse extends SaveContractResult; export function loadContracts(): LoadContractsResult
-- types.ts: export interface LandlordNotice; export interface Contract; export interface Settings; export type ChecklistState = Record<string, string[]>; export interface ChecklistItem; export type WindowStatus = 'upcoming' | 'open' | 'closed' | 'expired'; export type NoticeTiming = 'before_period' | 'in_period' | 'after_period'; export interface RenewalWindow
-- utils.ts: export function cn(...classes: (string | boolean | undefined | null)[]): string; export function formatNumber(n: number): string; export function formatCurrency(n: number, currency = 'KRW'): string
-
-### Components ...
+- types.ts: export interface LandlordNotice; export interface Contract; export interfa...
 CRITICAL: Before creating any new function, type, or component, check the list above. If something similar exists, import and use it.
 
 ## Already Implemented (do NOT duplicate or overwrite)
@@ -278,6 +280,7 @@ CRITICAL: Before creating any new function, type, or component, check the list a
 - 0002: 날짜 유틸·갱신 기간 엔진·통보 점검 엔진 (files: src/lib/date.ts, src/lib/renewal.ts, src/lib/notice.ts, src/lib/renewal.test.ts, src/lib/notice.test.ts)
 - 0003: 금액 엔진·표기 포맷(format.ts) (files: src/lib/money.ts, src/lib/format.ts, src/lib/money.test.ts, src/lib/format.test.ts)
 - 0004: 계약·설정·체크리스트 localStorage 저장소 (files: src/lib/storage.ts, src/lib/settingsStorage.ts, src/lib/storage.test.ts, src/lib/settingsStorage.test.ts)
+- 0005: 계약 폼·전환 금액·기준금리·통보 폼 검증 (files: src/lib/validation.ts, src/lib/noticeValidation.ts, src/lib/validation.test.ts, src/lib/noticeValidation.test.ts)
 
 ## Available exports from existing files
 // src/App.tsx
