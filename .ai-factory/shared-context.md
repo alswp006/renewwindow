@@ -263,8 +263,10 @@ export interface RouteState {
   main.tsx
   pages/
     ContractEdit.tsx
+    Home.test.tsx
     Home.tsx
     Notice.tsx
+    Result.test.tsx
     Result.tsx
     __TdsGallery.tsx
   styles/
@@ -285,7 +287,7 @@ export interface RouteState {
 - review.ts: export function requestReviewOnce(key: string = REVIEW_REQUESTED_KEY): void
 - settingsStorage.ts: export const SETTINGS_KEY = 'renewwindow:settings:v1'; export const SETTINGS_CORRUPT_KEY = 'renewwindow:settings:corrupt'; export const CHECKLIST_KEY = 'renewwindow:checklist:v1'; export const CHECKLIST_CORRUPT_KEY = 'renewwindow:checklist:corrupt'; export function loadSettings(): Settings; export function saveSettings(settings: Settings): SaveResult; export function loadChecklist(): ChecklistState; export function saveChecklist(contractId: string, checkedIds: string[]): SaveResult
 - share.ts: export interface ShareAppOptions; export async function shareApp(opts: ShareAppOptions): Promise<void>
-- storage.ts: export function getItem<T>(key: string): T | null; export function setItem<T>(key: string, value: T): void; export function removeItem(key: string): void; export const CONTRACTS_KEY = 'renewwindow:contracts:v1'; export const CONTRACTS_CORRUPT_KEY = 'renewwindow:contracts:cor...
+- storage.ts: export function getItem<T>(key: string): T | null; export function setItem<T>(key: string, value: T): void; export function removeItem(key: string): void; export const CONTRACTS_KEY = 'renewwindow:contracts:v1'; export const CONTRACTS_CO...
 CRITICAL: Before creating any new function, type, or component, check the list above. If something similar exists, import and use it.
 
 ## Already Implemented (do NOT duplicate or overwrite)
@@ -304,6 +306,7 @@ CRITICAL: Before creating any new function, type, or component, check the list a
 - 0016: 통보 입력 폼 컴포넌트 (NoticeForm) (files: src/components/notice/NoticeForm.tsx, src/components/notice/NoticeForm.test.tsx)
 - 0017: 통보 점검 결과 카드 컴포넌트 (NoticeResultCard) (files: src/components/notice/NoticeResultCard.tsx, src/components/notice/NoticeResultCard.test.tsx)
 - 0008: 홈 화면 (/) — 가까운 창구 순 계약 목록 + 배너 (files: src/pages/Home.tsx, src/pages/Home.test.tsx)
+- 0015: 결과 화면 (/contracts/:id) — 조립·리워드 게이트·배너·공유 (files: src/pages/Result.tsx, src/pages/Result.test.tsx)
 
 ## Available exports from existing files
 // src/App.tsx
