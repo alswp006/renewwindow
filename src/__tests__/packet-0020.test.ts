@@ -83,6 +83,8 @@ describe('검수 컴플라이언스 점검·전체 흐름 E2E·빌드 타깃', (
       change(/현재 월세/, '500000');
       expect((screen.getByLabelText(/만기일/) as HTMLInputElement).value).toBe('2027-03-31');
       fireEvent.click(screen.getByRole('button', { name: '저장' }));
+      // 결과 화면은 저장소를 다음 마이크로태스크에 읽는다 — 그 갱신이 act 밖에서 돌지 않게 여기서 기다린다.
+      await screen.findByText('D-117');
     }
 
     it('AC-2: 홈 → 계약 등록 → 저장하면 토스트와 결과 값이 보인다', async () => {
@@ -99,6 +101,9 @@ describe('검수 컴플라이언스 점검·전체 흐름 E2E·빌드 타깃', (
 
     it('AC-3: 통보 점검에서 상한 초과 결과가 보이고 console.error는 0회다', async () => {
       await registerContract();
+      // 통보일 2026-12-20은 등록일(2026-10-06) 기준 미래라 SPEC 검증(F-통보 AC-5)이 거부한다 —
+      // 통보를 받은 뒤의 날로 시계를 옮긴다(packet-0018과 같은 2027-01-10).
+      vi.setSystemTime(new Date('2027-01-10T09:00:00+09:00'));
       fireEvent.click(await screen.findByText('집주인 인상 통보 점검하기'));
       fireEvent.click(await screen.findByRole('tab', { name: '새 금액으로 입력' }));
       change(/통보일/, '20261220');

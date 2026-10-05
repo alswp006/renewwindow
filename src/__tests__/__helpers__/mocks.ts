@@ -373,9 +373,10 @@ export function mockTds() {
             "nav",
             { role: "navigation" },
             slot("upper", upper),
-            subtitleTop != null ? h("p", { "data-slot": "subtitle-top" }, subtitleTop) : null,
-            title ? h("h1", null, title) : null,
-            subtitleBottom != null ? h("p", { "data-slot": "subtitle-bottom" }, subtitleBottom) : null,
+            subtitleTop != null ? h("div", { "data-slot": "subtitle-top" }, subtitleTop) : null,
+            // 제목·서브타이틀 슬롯은 컨테이너다 — 문단은 Top.TitleParagraph/SubtitleParagraph가 그린다(h1>h1·p>p 중첩 방지).
+            title ? h("div", { "data-slot": "title" }, title) : null,
+            subtitleBottom != null ? h("div", { "data-slot": "subtitle-bottom" }, subtitleBottom) : null,
             slot("right", right),
             slot("lower", lower),
             children,
