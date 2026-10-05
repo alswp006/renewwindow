@@ -299,6 +299,7 @@ CRITICAL: Before creating any new function, type, or component, check the list a
 - 0010: 계약 삭제 버튼·확인 다이얼로그 (DeleteContractButton) (files: src/components/DeleteContractButton.tsx, src/components/DeleteContractButton.test.tsx)
 - 0012: 결과 무료 층 컴포넌트 (FreeTier) — 타임라인·5% 상한 카드 (files: src/components/result/FreeTier.tsx, src/components/result/FreeTier.test.tsx)
 - 0013: 월세 전환 카드·기준금리 BottomSheet (ConversionCard) (files: src/components/result/ConversionCard.tsx, src/components/result/BaseRateSheet.tsx, src/components/result/ConversionCard.test.tsx)
+- 0014: 심화 층 컴포넌트 (DeepTier) — 전환 시나리오 비교·협상 체크리스트 (files: src/components/result/DeepTier.tsx, src/components/result/DeepTier.test.tsx)
 
 ## Available exports from existing files
 // src/App.tsx
@@ -371,13 +372,11 @@ export function BaseRateSheet({
 // src/components/result/ConversionCard.tsx
 export function ConversionCard({ contract, today }: { contract: Contract; today: string }) {
 
-// src/components/result/FreeTier.tsx
-export function FreeTier({ contract, today }: { contract: Contract; today: string }) {
+// src/components/result/DeepTier.tsx
+export function DeepTier({ contract, deadlineDate }: { contract: Contract; deadlineDate: string }) {
 
-// src/constants/law.ts
-export const RENEWAL_START_MONTHS = 6; // 제6조의3 제1항
-export const RENEWAL_END_MONTHS = 2; // 제6조의3 제1항
-export
+// src/components/result/FreeTier.tsx
+export function FreeTier({ contract, today }: { contract: Contract; today: strin
 
 ## Memory Index (자동 학습 — 힌트로만 사용, 실제 코드 확인 필수)
 
