@@ -226,6 +226,10 @@ export interface RouteState {
     analytics.ts
     contract.ts
     date.ts
+    format.test.ts
+    format.ts
+    money.test.ts
+    money.ts
     notice.test.ts
     notice.ts
     renewal.test.ts
@@ -252,6 +256,8 @@ export interface RouteState {
 - analytics.ts: export type LogFields = Record<string, string | number | boolean | null>; export const DWELL_MS = 3000; export function fireAndForget(call: () => unknown): void; export function logScreen(page: string, extra?: LogFields): void; export function logClick(name: string, extra?: LogFields): void; export function logImpression(name: string, extra?: LogFields): void; export function useScreenLog(page: string): void
 - contract.ts: export type Contract =; export type ContractInput =; export type Settings =; export type RenewalWindow =; export type NoticeCheck =; export type Scenario =; export type Checklist =; export type SaveResult =
 - date.ts: export type InvalidDate =; export function isValidYMD(s: unknown): boolean; export function getToday(): string; export function addMonthsClamped(dateStr: string, months: number): string | InvalidDate; export function diffDays(dateA: string, dateB: string): number; export function formatDateInput(raw: string): string
+- format.ts: export function formatKRW(amount: number): string; export function digitsOnly(raw: string): string; export function formatNumberInput(raw: string): string; export function formatRate(rate: number): string; export function formatPercent2(percent: number): string; export function formatDday(days: number): string
+- money.ts: export function computeCap(deposit: number, monthlyRent: number): CapResult; export function computeConversionRate(baseRatePercent: number): number; export function computeConversion(amount: number, ratePercent: number): number; export function buildConversionResult( deposit: number, monthlyRent: number, conversionAmount: number, ratePercent: numb; export function computeScenarios( deposit: number, monthlyRent: number, ratePercent: number, ): ScenarioRow[]
 - notice.ts: export function computeNoticeCheck( contract: ContractInfo, notice: NoticeInfo, ): NoticeCheck | InvalidDate
 - renewal.ts: export function computeRenewalWindow(endDate: string, today: string): RenewalWindow | InvalidDate; export function sortContracts<T extends; export function getNoticeTiming(endDate: string, noticeDate: string): NoticeTiming | InvalidDate; export function isWithinOneYearOfIncrease( lastIncreaseDate: string | null | undefined, noticeDate: string, ): boolean
 - review.ts: export function requestReviewOnce(key: string = REVIEW_REQUESTED_KEY): void
@@ -277,6 +283,7 @@ export interface RouteState {
 - TossRewardAd.tsx: TossRewardAd
 
 ### Module Dependencies (import graph)
+  lib/money.ts → imports: lib/types, constants/law
   lib/notice.ts → imports: lib/types, constants/law, lib/date, lib/renewal
   lib/renewal.ts → imports: lib/types, constants/law, lib/date, lib/notice
 CRITICAL: Before creating any new function, type, or component, check the list above. If something similar exists, import and use it.
@@ -284,6 +291,7 @@ CRITICAL: Before creating any new function, type, or component, check the list a
 ## Already Implemented (do NOT duplicate or overwrite)
 - 0001: 타입·법령 상수·경로 상수·테스트 환경 (files: src/lib/types.ts, src/constants/law.ts, src/constants/routes.ts, vitest.config.ts, package.json)
 - 0002: 날짜 유틸·갱신 기간 엔진·통보 점검 엔진 (files: src/lib/date.ts, src/lib/renewal.ts, src/lib/notice.ts, src/lib/renewal.test.ts, src/lib/notice.test.ts)
+- 0003: 금액 엔진·표기 포맷(format.ts) (files: src/lib/money.ts, src/lib/format.ts, src/lib/money.test.ts, src/lib/format.test.ts)
 
 ## Available exports from existing files
 // src/App.tsx
