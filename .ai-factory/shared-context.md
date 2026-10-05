@@ -303,6 +303,7 @@ CRITICAL: Before creating any new function, type, or component, check the list a
 - 0014: 심화 층 컴포넌트 (DeepTier) — 전환 시나리오 비교·협상 체크리스트 (files: src/components/result/DeepTier.tsx, src/components/result/DeepTier.test.tsx)
 - 0016: 통보 입력 폼 컴포넌트 (NoticeForm) (files: src/components/notice/NoticeForm.tsx, src/components/notice/NoticeForm.test.tsx)
 - 0017: 통보 점검 결과 카드 컴포넌트 (NoticeResultCard) (files: src/components/notice/NoticeResultCard.tsx, src/components/notice/NoticeResultCard.test.tsx)
+- 0008: 홈 화면 (/) — 가까운 창구 순 계약 목록 + 배너 (files: src/pages/Home.tsx, src/pages/Home.test.tsx)
 
 ## Available exports from existing files
 // src/App.tsx

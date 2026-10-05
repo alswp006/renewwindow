@@ -16,8 +16,10 @@
 import React from "react";
 import { vi } from "vitest";
 
-export const mockNavigate = vi.fn();
-export const mockLocation = { pathname: "/", search: "", state: null, key: "default" };
+// react-router-dom 목은 router-mock.ts가 vitest.setup.ts에서 먼저 등록한다(테스트 파일의 자체 목이 덮어쓸 수 있게).
+import { enableRouterMock } from "./router-mock";
+export { mockNavigate, mockLocation } from "./router-mock";
+enableRouterMock();
 
 /** `useToast().openToast` — 토스트를 띄웠는지 단언할 때 쓴다. */
 export const mockOpenToast = vi.fn();
@@ -634,16 +636,7 @@ export function mockTossRewardAd() {
 // ── react-router-dom ──
 // Preserve actual router + override useNavigate for assertion.
 export function mockRouter() {
-  vi.mock("react-router-dom", async () => {
-    const actual = await vi.importActual<typeof import("react-router-dom")>(
-      "react-router-dom",
-    );
-    return {
-      ...actual,
-      useNavigate: () => mockNavigate,
-      useLocation: () => mockLocation,
-    };
-  });
+  // 등록은 router-mock.ts가 한다 — 여기서 vi.mock을 다시 걸면 테스트 파일의 자체 목을 덮어쓴다.
 }
 
 // ── Convenience: mock everything ──

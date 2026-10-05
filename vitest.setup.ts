@@ -10,6 +10,7 @@
 
 import { beforeEach, afterEach, vi } from "vitest";
 import "@testing-library/jest-dom/vitest";
+import "./src/__tests__/__helpers__/router-mock";
 
 // ── localStorage / sessionStorage isolation ──
 // jsdom's storage persists between tests by default. Clear it to prevent pollution.
