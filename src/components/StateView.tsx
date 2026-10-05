@@ -14,7 +14,10 @@ export function EmptyState({
   description,
   action,
   testId,
+  fill,
 }: {
+  /** 남는 화면 높이에서 세로 중앙에 둔다(탭 루트·단독 빈 화면용) */
+  fill?: boolean;
   /** Asset.ContentIcon 등(선택) */
   icon?: ReactNode;
   title: ReactNode;
@@ -32,6 +35,7 @@ export function EmptyState({
         alignItems: "center",
         textAlign: "center",
         padding: "48px 24px",
+        ...(fill ? { justifyContent: "center", minHeight: "calc(100dvh - 220px)" } : {}),
       }}
     >
       {icon}

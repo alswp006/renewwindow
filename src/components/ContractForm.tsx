@@ -165,6 +165,8 @@ export function ContractForm({
         }
       />
       {extra}
+      {/* 하단 고정 CTA(+안전영역)에 마지막 행이 가리지 않게 */}
+      <Spacing size={120} />
       <SubmitFooter label="저장" onClick={handleSave} loading={loading} />
     </>
   );

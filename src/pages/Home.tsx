@@ -139,6 +139,7 @@ export default function Home() {
         {status === 'ready' && rows.length === 0 && (
           <EmptyState
             testId="home-empty"
+            fill
             title="아직 등록한 계약이 없어요"
             description="만기일만 넣으면 갱신 요구 마감일을 알려드려요"
             action={
