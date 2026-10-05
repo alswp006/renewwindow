@@ -115,6 +115,8 @@ export function saveContract(draft: ContractDraft): SaveContractResponse {
       const existing = contracts.find((c) => c.id === draftId);
       if (!existing) return { ok: false, error: 'not_found' };
       contract = { ...existing, ...fields, id: existing.id, createdAt: existing.createdAt, updatedAt: now };
+      // 수정 화면에서 비운 최근 증액일은 fields에 키가 없으므로 이전 값을 지운다
+      if (fields.lastIncreaseDate === undefined) delete contract.lastIncreaseDate;
       next = contracts.map((c) => (c.id === draftId ? contract : c));
     } else {
       if (contracts.length >= MAX_CONTRACTS) return { ok: false, error: 'limit' };
