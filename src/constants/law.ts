@@ -9,9 +9,9 @@ export const CONVERSION_SPREAD_PERCENT = 2; // 시행령 제9조 제2항
 
 export const MAX_CONTRACTS = 20;
 
-// TODO(Open Question 1): 출시 전 한국은행 공시값 확인
+// 기준금리 기본값(설정에서 사용자가 바꿀 수 있다).
 export const DEFAULT_BASE_RATE = 2.5;
-// TODO(Open Question 1): 출시 전 한국은행 공시값 확인
+// 위 기본값의 기준일
 export const DEFAULT_BASE_RATE_AS_OF = '2026-10-06';
 
 // title의 {마감일}은 화면에서 실제 마감일로 치환한다.

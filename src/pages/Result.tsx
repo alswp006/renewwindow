@@ -124,8 +124,8 @@ function ResultBody({ contract, today }: { contract: Contract; today: string }) 
         }
       />
       <Spacing size={24} />
-      {/* TODO: TossRewardAd에 게이트 버튼 클릭 콜백이 없다 — 생기면 logClick('locked_tier_unlock')을 연결한다. */}
       <TossRewardAd
+        onGateClick={() => logClick('locked_tier_unlock')}
         slotId={(import.meta.env.VITE_TOSS_AD_SLOT_ID as string | undefined) ?? ''}
         description="광고를 시청하면 더 깊은 분석을 볼 수 있어요"
         buttonText="광고 보고 전환 시나리오 비교·협상 체크리스트 보기"

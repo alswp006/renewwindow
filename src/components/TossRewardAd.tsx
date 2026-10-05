@@ -14,6 +14,8 @@ interface TossRewardAdProps {
   description?: string;
   /** 광고 버튼 텍스트 */
   buttonText?: string;
+  /** 게이트 버튼 클릭 콜백 (계측용) */
+  onGateClick?: () => void;
   /** 광고 시청 완료 콜백 */
   onRewarded?: () => void;
   /** 광고 로드 타임아웃 (ms). 초과 시 자동 언락 */
@@ -45,6 +47,7 @@ export function TossRewardAd({
   description = "광고를 시청하면 결과를 확인할 수 있어요",
   buttonText = "광고 보고 확인하기",
   onRewarded,
+  onGateClick,
   timeoutMs = 15000,
 }: TossRewardAdProps) {
   const [unlocked, setUnlocked] = useState(false);
@@ -114,6 +117,7 @@ export function TossRewardAd({
   }
 
   const handleWatch = () => {
+    try { onGateClick?.(); } catch { /* 계측 실패는 무시 */ }
     setIsShowing(true);
 
     // Timeout fallback
