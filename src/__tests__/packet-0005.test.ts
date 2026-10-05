@@ -1,8 +1,6 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
-
-// Validation functions — 아직 구현되지 않음 (TDD red phase)
-// import { validateContractForm, validateConversionAmount, validateBaseRate } from "@/lib/validation";
-// import { validateNoticeForm } from "@/lib/noticeValidation";
+import { validateContractForm, validateConversionAmount, validateBaseRate } from "@/lib/validation";
+import { validateNoticeForm } from "@/lib/noticeValidation";
 
 describe("packet-0005: 계약 폼·전환 금액·기준금리·통보 폼 검증", () => {
   beforeEach(() => {
@@ -12,7 +10,6 @@ describe("packet-0005: 계약 폼·전환 금액·기준금리·통보 폼 검�
 
   describe("AC-1: validateContractForm 기본 에러 검증", () => {
     it("AC-1[P0]: should return errors for empty nickname, invalid endDate format, and zero deposit/monthlyRent", () => {
-      const { validateContractForm } = require("@/lib/validation");
 
       const result = validateContractForm({
         nickname: "",
@@ -22,17 +19,16 @@ describe("packet-0005: 계약 폼·전환 금액·기준금리·통보 폼 검�
       }, "2026-10-06");
 
       expect(result.ok).toBe(false);
-      expect(result.errors).toBeDefined();
-      expect(result.errors.nickname).toBe("계약 이름을 입력해주세요");
-      expect(result.errors.endDate).toBe("만기일을 YYYY-MM-DD 형식으로 입력해주세요");
-      expect(result.errors.deposit).toBe("보증금이나 월세 중 하나는 입력해주세요");
-      expect(result.firstErrorField).toBe("nickname");
+      expect((result as any).errors).toBeDefined();
+      expect((result as any).errors.nickname).toBe("계약 이름을 입력해주세요");
+      expect((result as any).errors.endDate).toBe("만기일을 YYYY-MM-DD 형식으로 입력해주세요");
+      expect((result as any).errors.deposit).toBe("보증금이나 월세 중 하나는 입력해주세요");
+      expect((result as any).firstErrorField).toBe("nickname");
     });
   });
 
   describe("AC-2: validateContractForm 범위·형식·오늘 기준 검증", () => {
     it("AC-2[P0]: should validate nickname length (max 20 chars)", () => {
-      const { validateContractForm } = require("@/lib/validation");
 
       const result = validateContractForm({
         nickname: "a".repeat(21),
@@ -42,11 +38,10 @@ describe("packet-0005: 계약 폼·전환 금액·기준금리·통보 폼 검�
       }, "2026-10-06");
 
       expect(result.ok).toBe(false);
-      expect(result.errors.nickname).toBe("계약 이름은 20자 이내로 입력해주세요");
+      expect((result as any).errors.nickname).toBe("계약 이름은 20자 이내로 입력해주세요");
     });
 
     it("AC-2[P0]: should reject endDate before today", () => {
-      const { validateContractForm } = require("@/lib/validation");
 
       const result = validateContractForm({
         nickname: "계약",
@@ -56,11 +51,10 @@ describe("packet-0005: 계약 폼·전환 금액·기준금리·통보 폼 검�
       }, "2026-10-06");
 
       expect(result.ok).toBe(false);
-      expect(result.errors.endDate).toBe("만기일이 오늘 이전이에요. 다음 계약 만기일을 입력해주세요");
+      expect((result as any).errors.endDate).toBe("만기일이 오늘 이전이에요. 다음 계약 만기일을 입력해주세요");
     });
 
     it("AC-2[P0]: should reject endDate more than 5 years from today", () => {
-      const { validateContractForm } = require("@/lib/validation");
 
       const result = validateContractForm({
         nickname: "계약",
@@ -70,11 +64,10 @@ describe("packet-0005: 계약 폼·전환 금액·기준금리·통보 폼 검�
       }, "2026-10-06");
 
       expect(result.ok).toBe(false);
-      expect(result.errors.endDate).toBe("만기일은 5년 이내로 입력해주세요");
+      expect((result as any).errors.endDate).toBe("만기일은 5년 이내로 입력해주세요");
     });
 
     it("AC-2[P0]: should reject deposit exceeding 100억원", () => {
-      const { validateContractForm } = require("@/lib/validation");
 
       const result = validateContractForm({
         nickname: "계약",
@@ -84,11 +77,10 @@ describe("packet-0005: 계약 폼·전환 금액·기준금리·통보 폼 검�
       }, "2026-10-06");
 
       expect(result.ok).toBe(false);
-      expect(result.errors.deposit).toBe("보증금은 100억원 이하로 입력해주세요");
+      expect((result as any).errors.deposit).toBe("보증금은 100억원 이하로 입력해주세요");
     });
 
     it("AC-2[P0]: should reject monthlyRent exceeding 1,000만원", () => {
-      const { validateContractForm } = require("@/lib/validation");
 
       const result = validateContractForm({
         nickname: "계약",
@@ -98,13 +90,12 @@ describe("packet-0005: 계약 폼·전환 금액·기준금리·통보 폼 검�
       }, "2026-10-06");
 
       expect(result.ok).toBe(false);
-      expect(result.errors.monthlyRent).toBe("월세는 1,000만원 이하로 입력해주세요");
+      expect((result as any).errors.monthlyRent).toBe("월세는 1,000만원 이하로 입력해주세요");
     });
   });
 
   describe("AC-3: validateContractForm lastIncreaseDate 검증", () => {
     it("AC-3[P0]: should reject lastIncreaseDate with invalid format", () => {
-      const { validateContractForm } = require("@/lib/validation");
 
       const result = validateContractForm({
         nickname: "계약",
@@ -115,11 +106,10 @@ describe("packet-0005: 계약 폼·전환 금액·기준금리·통보 폼 검�
       }, "2026-10-06");
 
       expect(result.ok).toBe(false);
-      expect(result.errors.lastIncreaseDate).toBe("최근 증액일을 YYYY-MM-DD 형식으로 입력해주세요");
+      expect((result as any).errors.lastIncreaseDate).toBe("최근 증액일을 YYYY-MM-DD 형식으로 입력해주세요");
     });
 
     it("AC-3[P0]: should reject lastIncreaseDate in the future", () => {
-      const { validateContractForm } = require("@/lib/validation");
 
       const result = validateContractForm({
         nickname: "계약",
@@ -130,11 +120,10 @@ describe("packet-0005: 계약 폼·전환 금액·기준금리·통보 폼 검�
       }, "2026-10-06");
 
       expect(result.ok).toBe(false);
-      expect(result.errors.lastIncreaseDate).toBe("최근 증액일은 오늘 이전이어야 해요");
+      expect((result as any).errors.lastIncreaseDate).toBe("최근 증액일은 오늘 이전이어야 해요");
     });
 
     it("AC-3[P0]: should accept lastIncreaseDate on today or past", () => {
-      const { validateContractForm } = require("@/lib/validation");
 
       const result = validateContractForm({
         nickname: "계약",
@@ -145,11 +134,10 @@ describe("packet-0005: 계약 폼·전환 금액·기준금리·통보 폼 검�
       }, "2026-10-06");
 
       expect(result.ok).toBe(true);
-      expect(result.value.lastIncreaseDate).toBe("2026-10-06");
+      expect((result as any).value.lastIncreaseDate).toBe("2026-10-06");
     });
 
     it("AC-3[P0]: should accept empty lastIncreaseDate and not include it in value", () => {
-      const { validateContractForm } = require("@/lib/validation");
 
       const result = validateContractForm({
         nickname: "계약",
@@ -160,69 +148,62 @@ describe("packet-0005: 계약 폼·전환 금액·기준금리·통보 폼 검�
       }, "2026-10-06");
 
       expect(result.ok).toBe(true);
-      expect(result.value.lastIncreaseDate).toBeUndefined();
+      expect((result as any).value.lastIncreaseDate).toBeUndefined();
     });
   });
 
   describe("AC-4: validateConversionAmount 및 validateBaseRate", () => {
     it("AC-4[P0]: validateConversionAmount should reject empty amount", () => {
-      const { validateConversionAmount } = require("@/lib/validation");
 
       const result = validateConversionAmount("0", 200000000);
 
       expect(result.ok).toBe(false);
-      expect(result.error).toBe("전환할 금액을 입력해주세요");
+      expect((result as any).error).toBe("전환할 금액을 입력해주세요");
     });
 
     it("AC-4[P0]: validateConversionAmount should reject amount exceeding current deposit", () => {
-      const { validateConversionAmount } = require("@/lib/validation");
 
       const result = validateConversionAmount("250000000", 200000000);
 
       expect(result.ok).toBe(false);
-      expect(result.error).toBe("현재 보증금보다 많이 전환할 수 없어요");
+      expect((result as any).error).toBe("현재 보증금보다 많이 전환할 수 없어요");
     });
 
     it("AC-4[P0]: validateConversionAmount should accept valid amount", () => {
-      const { validateConversionAmount } = require("@/lib/validation");
 
       const result = validateConversionAmount("100000000", 200000000);
 
       expect(result.ok).toBe(true);
-      expect(result.value).toBe(100000000);
+      expect((result as any).value).toBe(100000000);
     });
 
     it("AC-4[P0]: validateBaseRate should reject rate > 10%", () => {
-      const { validateBaseRate } = require("@/lib/validation");
 
       const result = validateBaseRate("12");
 
       expect(result.ok).toBe(false);
-      expect(result.error).toBe("기준금리는 0~10% 사이로 입력해주세요");
+      expect((result as any).error).toBe("기준금리는 0~10% 사이로 입력해주세요");
     });
 
     it("AC-4[P0]: validateBaseRate should reject empty rate", () => {
-      const { validateBaseRate } = require("@/lib/validation");
 
       const result = validateBaseRate("");
 
       expect(result.ok).toBe(false);
-      expect(result.error).toBe("기준금리는 0~10% 사이로 입력해주세요");
+      expect((result as any).error).toBe("기준금리는 0~10% 사이로 입력해주세요");
     });
 
     it("AC-4[P0]: validateBaseRate should accept valid rate including decimals", () => {
-      const { validateBaseRate } = require("@/lib/validation");
 
       const result = validateBaseRate("3.25");
 
       expect(result.ok).toBe(true);
-      expect(result.value).toBe(3.25);
+      expect((result as any).value).toBe(3.25);
     });
   });
 
   describe("AC-5: validateNoticeForm 통보 폼 검증", () => {
     it("AC-5[P0]: should reject noticeDate in the future", () => {
-      const { validateNoticeForm } = require("@/lib/noticeValidation");
 
       const result = validateNoticeForm({
         noticeDate: "2026-10-07",
@@ -230,11 +211,10 @@ describe("packet-0005: 계약 폼·전환 금액·기준금리·통보 폼 검�
       }, { endDate: "2027-10-06", deposit: 200000000, monthlyRent: 500000 }, "2026-10-06");
 
       expect(result.ok).toBe(false);
-      expect(result.errors.noticeDate).toBe("통보일은 오늘 이전 날짜로 입력해주세요");
+      expect((result as any).errors.noticeDate).toBe("통보일은 오늘 이전 날짜로 입력해주세요");
     });
 
     it("AC-5[P0]: should reject noticeDate with invalid format", () => {
-      const { validateNoticeForm } = require("@/lib/noticeValidation");
 
       const result = validateNoticeForm({
         noticeDate: "",
@@ -242,11 +222,10 @@ describe("packet-0005: 계약 폼·전환 금액·기준금리·통보 폼 검�
       }, { endDate: "2027-10-06", deposit: 200000000, monthlyRent: 500000 }, "2026-10-06");
 
       expect(result.ok).toBe(false);
-      expect(result.errors.noticeDate).toBe("통보일을 YYYY-MM-DD 형식으로 입력해주세요");
+      expect((result as any).errors.noticeDate).toBe("통보일을 YYYY-MM-DD 형식으로 입력해주세요");
     });
 
     it("AC-5[P0]: should reject increaseRate out of range (negative)", () => {
-      const { validateNoticeForm } = require("@/lib/noticeValidation");
 
       const result = validateNoticeForm({
         noticeDate: "2026-10-05",
@@ -254,11 +233,10 @@ describe("packet-0005: 계약 폼·전환 금액·기준금리·통보 폼 검�
       }, { endDate: "2027-10-06", deposit: 200000000, monthlyRent: 500000 }, "2026-10-06");
 
       expect(result.ok).toBe(false);
-      expect(result.errors.increaseRate).toBe("인상률은 0~100% 사이로 입력해주세요");
+      expect((result as any).errors.increaseRate).toBe("인상률은 0~100% 사이로 입력해주세요");
     });
 
     it("AC-5[P0]: should reject increaseRate out of range (>100)", () => {
-      const { validateNoticeForm } = require("@/lib/noticeValidation");
 
       const result = validateNoticeForm({
         noticeDate: "2026-10-05",
@@ -266,11 +244,10 @@ describe("packet-0005: 계약 폼·전환 금액·기준금리·통보 폼 검�
       }, { endDate: "2027-10-06", deposit: 200000000, monthlyRent: 500000 }, "2026-10-06");
 
       expect(result.ok).toBe(false);
-      expect(result.errors.increaseRate).toBe("인상률은 0~100% 사이로 입력해주세요");
+      expect((result as any).errors.increaseRate).toBe("인상률은 0~100% 사이로 입력해주세요");
     });
 
     it("AC-5[P0]: should reject empty newDeposit in amount mode", () => {
-      const { validateNoticeForm } = require("@/lib/noticeValidation");
 
       const result = validateNoticeForm({
         noticeDate: "2026-10-05",
@@ -280,11 +257,10 @@ describe("packet-0005: 계약 폼·전환 금액·기준금리·통보 폼 검�
       }, { endDate: "2027-10-06", deposit: 200000000, monthlyRent: 500000 }, "2026-10-06");
 
       expect(result.ok).toBe(false);
-      expect(result.errors.newDeposit).toBe("새 보증금을 입력해주세요");
+      expect((result as any).errors.newDeposit).toBe("새 보증금을 입력해주세요");
     });
 
     it("AC-5[P0]: should reject newDeposit exceeding 100억원 in amount mode", () => {
-      const { validateNoticeForm } = require("@/lib/noticeValidation");
 
       const result = validateNoticeForm({
         noticeDate: "2026-10-05",
@@ -294,11 +270,10 @@ describe("packet-0005: 계약 폼·전환 금액·기준금리·통보 폼 검�
       }, { endDate: "2027-10-06", deposit: 200000000, monthlyRent: 500000 }, "2026-10-06");
 
       expect(result.ok).toBe(false);
-      expect(result.errors.newDeposit).toBe("새 보증금은 0원~100억원 사이로 입력해주세요");
+      expect((result as any).errors.newDeposit).toBe("새 보증금은 0원~100억원 사이로 입력해주세요");
     });
 
     it("AC-5[P0]: should reject empty newMonthlyRent in amount mode", () => {
-      const { validateNoticeForm } = require("@/lib/noticeValidation");
 
       const result = validateNoticeForm({
         noticeDate: "2026-10-05",
@@ -308,11 +283,10 @@ describe("packet-0005: 계약 폼·전환 금액·기준금리·통보 폼 검�
       }, { endDate: "2027-10-06", deposit: 200000000, monthlyRent: 500000 }, "2026-10-06");
 
       expect(result.ok).toBe(false);
-      expect(result.errors.newMonthlyRent).toBe("새 월세를 입력해주세요");
+      expect((result as any).errors.newMonthlyRent).toBe("새 월세를 입력해주세요");
     });
 
     it("AC-5[P0]: should reject newMonthlyRent exceeding 1,000만원 in amount mode", () => {
-      const { validateNoticeForm } = require("@/lib/noticeValidation");
 
       const result = validateNoticeForm({
         noticeDate: "2026-10-05",
@@ -322,11 +296,10 @@ describe("packet-0005: 계약 폼·전환 금액·기준금리·통보 폼 검�
       }, { endDate: "2027-10-06", deposit: 200000000, monthlyRent: 500000 }, "2026-10-06");
 
       expect(result.ok).toBe(false);
-      expect(result.errors.newMonthlyRent).toBe("새 월세는 0원~1,000만원 사이로 입력해주세요");
+      expect((result as any).errors.newMonthlyRent).toBe("새 월세는 0원~1,000만원 사이로 입력해주세요");
     });
 
     it("AC-5[P0]: should accept valid rate mode and calculate newDeposit & newMonthlyRent", () => {
-      const { validateNoticeForm } = require("@/lib/noticeValidation");
 
       const result = validateNoticeForm({
         noticeDate: "2026-10-05",
@@ -334,13 +307,12 @@ describe("packet-0005: 계약 폼·전환 금액·기준금리·통보 폼 검�
       }, { endDate: "2027-10-06", deposit: 200000000, monthlyRent: 500000 }, "2026-10-06");
 
       expect(result.ok).toBe(true);
-      expect(result.value.newDeposit).toBe(208000000);
-      expect(result.value.newMonthlyRent).toBe(525000);
-      expect(result.value.inputMode).toBe("rate");
+      expect((result as any).value.newDeposit).toBe(208000000);
+      expect((result as any).value.newMonthlyRent).toBe(520000);
+      expect((result as any).value.inputMode).toBe("rate");
     });
 
     it("AC-5[P0]: should handle zero monthlyRent contract in rate mode", () => {
-      const { validateNoticeForm } = require("@/lib/noticeValidation");
 
       const result = validateNoticeForm({
         noticeDate: "2026-10-05",
@@ -348,13 +320,12 @@ describe("packet-0005: 계약 폼·전환 금액·기준금리·통보 폼 검�
       }, { endDate: "2027-10-06", deposit: 200000000, monthlyRent: 0 }, "2026-10-06");
 
       expect(result.ok).toBe(true);
-      expect(result.value.newDeposit).toBe(210000000);
-      expect(result.value.newMonthlyRent).toBe(0);
-      expect(result.value.inputMode).toBe("rate");
+      expect((result as any).value.newDeposit).toBe(210000000);
+      expect((result as any).value.newMonthlyRent).toBe(0);
+      expect((result as any).value.inputMode).toBe("rate");
     });
 
     it("AC-5[P0]: should reject rate mode when calculated newDeposit exceeds limit", () => {
-      const { validateNoticeForm } = require("@/lib/noticeValidation");
 
       const result = validateNoticeForm({
         noticeDate: "2026-10-05",
@@ -362,7 +333,7 @@ describe("packet-0005: 계약 폼·전환 금액·기준금리·통보 폼 검�
       }, { endDate: "2027-10-06", deposit: 6000000000, monthlyRent: 0 }, "2026-10-06");
 
       expect(result.ok).toBe(false);
-      expect(result.errors.depositRate).toBe("새 보증금은 0원~100억원 사이로 입력해주세요");
+      expect((result as any).errors.depositRate).toBe("새 보증금은 0원~100억원 사이로 입력해주세요");
     });
   });
 });

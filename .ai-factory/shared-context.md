@@ -235,7 +235,10 @@ export interface RouteState {
     renewal.test.ts
     renewal.ts
     review.ts
+    settingsStorage.test.ts
+    settingsStorage.ts
     share.ts
+    storage.test.ts
     storage.ts
     types.ts
     utils.ts
@@ -261,37 +264,20 @@ export interface RouteState {
 - notice.ts: export function computeNoticeCheck( contract: ContractInfo, notice: NoticeInfo, ): NoticeCheck | InvalidDate
 - renewal.ts: export function computeRenewalWindow(endDate: string, today: string): RenewalWindow | InvalidDate; export function sortContracts<T extends; export function getNoticeTiming(endDate: string, noticeDate: string): NoticeTiming | InvalidDate; export function isWithinOneYearOfIncrease( lastIncreaseDate: string | null | undefined, noticeDate: string, ): boolean
 - review.ts: export function requestReviewOnce(key: string = REVIEW_REQUESTED_KEY): void
+- settingsStorage.ts: export const SETTINGS_KEY = 'renewwindow:settings:v1'; export const SETTINGS_CORRUPT_KEY = 'renewwindow:settings:corrupt'; export const CHECKLIST_KEY = 'renewwindow:checklist:v1'; export const CHECKLIST_CORRUPT_KEY = 'renewwindow:checklist:corrupt'; export function loadSettings(): Settings; export function saveSettings(settings: Settings): SaveResult; export function loadChecklist(): ChecklistState; export function saveChecklist(contractId: string, checkedIds: string[]): SaveResult
 - share.ts: export interface ShareAppOptions; export async function shareApp(opts: ShareAppOptions): Promise<void>
-- storage.ts: export function getItem<T>(key: string): T | null; export function setItem<T>(key: string, value: T): void; export function removeItem(key: string): void
+- storage.ts: export function getItem<T>(key: string): T | null; export function setItem<T>(key: string, value: T): void; export function removeItem(key: string): void; export const CONTRACTS_KEY = 'renewwindow:contracts:v1'; export const CONTRACTS_CORRUPT_KEY = 'renewwindow:contracts:corrupt'; export type ContractDraft = Omit<Contract, 'id' | 'createdAt' | 'updatedAt'> &; export interface SaveContractResponse extends SaveContractResult; export function loadContracts(): LoadContractsResult
 - types.ts: export interface LandlordNotice; export interface Contract; export interface Settings; export type ChecklistState = Record<string, string[]>; export interface ChecklistItem; export type WindowStatus = 'upcoming' | 'open' | 'closed' | 'expired'; export type NoticeTiming = 'before_period' | 'in_period' | 'after_period'; export interface RenewalWindow
 - utils.ts: export function cn(...classes: (string | boolean | undefined | null)[]): string; export function formatNumber(n: number): string; export function formatCurrency(n: number, currency = 'KRW'): string
 
-### Components (src/components/)
-- AdSlot.tsx: AdSlot
-- Amount.tsx: Amount
-- BottomCTA.tsx: SubmitFooter, ButtonStack
-- Card.tsx: Card
-- CountUp.tsx: CountUp
-- FloatingTabBar.tsx: FloatingTabBar
-- MiniBar.tsx: MiniBar
-- PageShell.tsx: PageShell
-- ScreenScaffold.tsx: ScreenScaffold
-- Sparkline.tsx: Sparkline
-- StateView.tsx: EmptyState, LoadingState
-- SummaryHero.tsx: SummaryHero
-- TossPurchase.tsx: TossPurchase
-- TossRewardAd.tsx: TossRewardAd
-
-### Module Dependencies (import graph)
-  lib/money.ts → imports: lib/types, constants/law
-  lib/notice.ts → imports: lib/types, constants/law, lib/date, lib/renewal
-  lib/renewal.ts → imports: lib/types, constants/law, lib/date, lib/notice
+### Components ...
 CRITICAL: Before creating any new function, type, or component, check the list above. If something similar exists, import and use it.
 
 ## Already Implemented (do NOT duplicate or overwrite)
 - 0001: 타입·법령 상수·경로 상수·테스트 환경 (files: src/lib/types.ts, src/constants/law.ts, src/constants/routes.ts, vitest.config.ts, package.json)
 - 0002: 날짜 유틸·갱신 기간 엔진·통보 점검 엔진 (files: src/lib/date.ts, src/lib/renewal.ts, src/lib/notice.ts, src/lib/renewal.test.ts, src/lib/notice.test.ts)
 - 0003: 금액 엔진·표기 포맷(format.ts) (files: src/lib/money.ts, src/lib/format.ts, src/lib/money.test.ts, src/lib/format.test.ts)
+- 0004: 계약·설정·체크리스트 localStorage 저장소 (files: src/lib/storage.ts, src/lib/settingsStorage.ts, src/lib/storage.test.ts, src/lib/settingsStorage.test.ts)
 
 ## Available exports from existing files
 // src/App.tsx
