@@ -226,6 +226,7 @@ export interface RouteState {
     TossPurchase.tsx
     TossRewardAd.tsx
     fields.test.tsx
+    notice/
     result/
   constants/
     law.ts
@@ -284,7 +285,7 @@ export interface RouteState {
 - review.ts: export function requestReviewOnce(key: string = REVIEW_REQUESTED_KEY): void
 - settingsStorage.ts: export const SETTINGS_KEY = 'renewwindow:settings:v1'; export const SETTINGS_CORRUPT_KEY = 'renewwindow:settings:corrupt'; export const CHECKLIST_KEY = 'renewwindow:checklist:v1'; export const CHECKLIST_CORRUPT_KEY = 'renewwindow:checklist:corrupt'; export function loadSettings(): Settings; export function saveSettings(settings: Settings): SaveResult; export function loadChecklist(): ChecklistState; export function saveChecklist(contractId: string, checkedIds: string[]): SaveResult
 - share.ts: export interface ShareAppOptions; export async function shareApp(opts: ShareAppOptions): Promise<void>
-- storage.ts: export function getItem<T>(key: string): T | null; export function setItem<T>(key: string, value: T): void; export function removeItem(key: string): void; export const CONTRACTS_KEY = 'renewwindow:contracts:v1'; export const CONTRACTS_CORRUPT_KEY = 'renewwindow:contracts:corrupt'; expor...
+- storage.ts: export function getItem<T>(key: string): T | null; export function setItem<T>(key: string, value: T): void; export function removeItem(key: string): void; export const CONTRACTS_KEY = 'renewwindow:contracts:v1'; export const CONTRACTS_CORRUPT_KEY = 'renewwindow:contracts:cor...
 CRITICAL: Before creating any new function, type, or component, check the list above. If something similar exists, import and use it.
 
 ## Already Implemented (do NOT duplicate or overwrite)
@@ -300,6 +301,7 @@ CRITICAL: Before creating any new function, type, or component, check the list a
 - 0012: 결과 무료 층 컴포넌트 (FreeTier) — 타임라인·5% 상한 카드 (files: src/components/result/FreeTier.tsx, src/components/result/FreeTier.test.tsx)
 - 0013: 월세 전환 카드·기준금리 BottomSheet (ConversionCard) (files: src/components/result/ConversionCard.tsx, src/components/result/BaseRateSheet.tsx, src/components/result/ConversionCard.test.tsx)
 - 0014: 심화 층 컴포넌트 (DeepTier) — 전환 시나리오 비교·협상 체크리스트 (files: src/components/result/DeepTier.tsx, src/components/result/DeepTier.test.tsx)
+- 0016: 통보 입력 폼 컴포넌트 (NoticeForm) (files: src/components/notice/NoticeForm.tsx, src/components/notice/NoticeForm.test.tsx)
 
 ## Available exports from existing files
 // src/App.tsx
@@ -366,6 +368,9 @@ export function TossPurchase({
 // src/components/TossRewardAd.tsx
 export function TossRewardAd({
 
+// src/components/notice/NoticeForm.tsx
+export function NoticeForm({
+
 // src/components/result/BaseRateSheet.tsx
 export function BaseRateSheet({
 
@@ -376,7 +381,7 @@ export function ConversionCard({ contract, today }: { contract: Contract; today:
 export function DeepTier({ contract, deadlineDate }: { contract: Contract; deadlineDate: string }) {
 
 // src/components/result/FreeTier.tsx
-export function FreeTier({ contract, today }: { contract: Contract; today: strin
+export fun
 
 ## Memory Index (자동 학습 — 힌트로만 사용, 실제 코드 확인 필수)
 
