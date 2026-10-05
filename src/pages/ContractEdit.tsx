@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Spacing, Top, useToast } from '@toss/tds-mobile';
+import { Paragraph, Spacing, Top, useToast } from '@toss/tds-mobile';
 import { ScreenScaffold } from '@/components/ScreenScaffold';
 import { NotFoundState } from '@/components/NotFoundState';
 import { ContractForm } from '@/components/ContractForm';
@@ -35,7 +35,14 @@ export default function ContractEdit() {
   const contract = isNew ? undefined : existing.contract;
 
   const top = (
-    <Top title={<Top.TitleParagraph>{isNew ? '계약 등록' : '계약 수정'}</Top.TitleParagraph>} />
+    <Top
+      title={<Top.TitleParagraph>갱신체크</Top.TitleParagraph>}
+      lower={
+        <Paragraph.Text typography="t5" color="var(--adaptiveGrey600)">
+          {isNew ? '계약 등록' : '계약 수정'}
+        </Paragraph.Text>
+      }
+    />
   );
 
   if (status === 'not_found') {
