@@ -226,6 +226,7 @@ export interface RouteState {
     TossPurchase.tsx
     TossRewardAd.tsx
     fields.test.tsx
+    result/
   constants/
     law.ts
     routes.ts
@@ -283,7 +284,7 @@ export interface RouteState {
 - review.ts: export function requestReviewOnce(key: string = REVIEW_REQUESTED_KEY): void
 - settingsStorage.ts: export const SETTINGS_KEY = 'renewwindow:settings:v1'; export const SETTINGS_CORRUPT_KEY = 'renewwindow:settings:corrupt'; export const CHECKLIST_KEY = 'renewwindow:checklist:v1'; export const CHECKLIST_CORRUPT_KEY = 'renewwindow:checklist:corrupt'; export function loadSettings(): Settings; export function saveSettings(settings: Settings): SaveResult; export function loadChecklist(): ChecklistState; export function saveChecklist(contractId: string, checkedIds: string[]): SaveResult
 - share.ts: export interface ShareAppOptions; export async function shareApp(opts: ShareAppOptions): Promise<void>
-- storage.ts: export function getItem<T>(key: string): T | null; export function setItem<T>(key: string, value: T): void; export function removeItem(key: string): void; export const CONTRACTS_KEY = 'renewwindow:contracts:v1'; export const CONTRACTS_CORRUPT_KEY = 'renewwindow:contracts:corrupt'; export type Contr...
+- storage.ts: export function getItem<T>(key: string): T | null; export function setItem<T>(key: string, value: T): void; export function removeItem(key: string): void; export const CONTRACTS_KEY = 'renewwindow:contracts:v1'; export const CONTRACTS_CORRUPT_KEY = 'renewwindow:contracts:corrupt'; expor...
 CRITICAL: Before creating any new function, type, or component, check the list above. If something similar exists, import and use it.
 
 ## Already Implemented (do NOT duplicate or overwrite)
@@ -296,6 +297,7 @@ CRITICAL: Before creating any new function, type, or component, check the list a
 - 0007: 공용 입력 필드 — 금액·날짜 TextField, 계약 없음 상태 (files: src/components/AmountField.tsx, src/components/DateField.tsx, src/components/NotFoundState.tsx, src/components/fields.test.tsx)
 - 0009: 계약 입력 폼 컴포넌트 (ContractForm) (files: src/components/ContractForm.tsx, src/components/ContractForm.test.tsx)
 - 0010: 계약 삭제 버튼·확인 다이얼로그 (DeleteContractButton) (files: src/components/DeleteContractButton.tsx, src/components/DeleteContractButton.test.tsx)
+- 0012: 결과 무료 층 컴포넌트 (FreeTier) — 타임라인·5% 상한 카드 (files: src/components/result/FreeTier.tsx, src/components/result/FreeTier.test.tsx)
 
 ## Available exports from existing files
 // src/App.tsx
@@ -362,6 +364,9 @@ export function TossPurchase({
 // src/components/TossRewardAd.tsx
 export function TossRewardAd({
 
+// src/components/result/FreeTier.tsx
+export function FreeTier({ contract, today }: { contract: Contract; today: string }) {
+
 // src/constants/law.ts
 export const RENEWAL_START_MONTHS = 6; // 제6조의3 제1항
 export const RENEWAL_END_MONTHS = 2; // 제6조의3 제1항
@@ -369,11 +374,7 @@ export const INCREASE_CAP_PERCENT = 5; // 제7조 제2항
 export const CONVERSION_CAP_PERCENT = 10; // 제7조의2 제1호
 export const CONVERSION_SPREAD_PERCENT = 2; // 시행령 제9조 제2항
 export const MAX_CONTRACTS = 20;
-export const DEFAULT_BASE_RATE = 2.5;
-export const DEFAULT_BASE_RATE_AS_OF = '2026-10-06';
-export const CHECKLIST_ITEMS: ChecklistItem[] = [
-
-// src/
+export const DEFAULT_BA
 
 ## Memory Index (자동 학습 — 힌트로만 사용, 실제 코드 확인 필수)
 
