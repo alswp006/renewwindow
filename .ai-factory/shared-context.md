@@ -298,6 +298,7 @@ CRITICAL: Before creating any new function, type, or component, check the list a
 - 0009: 계약 입력 폼 컴포넌트 (ContractForm) (files: src/components/ContractForm.tsx, src/components/ContractForm.test.tsx)
 - 0010: 계약 삭제 버튼·확인 다이얼로그 (DeleteContractButton) (files: src/components/DeleteContractButton.tsx, src/components/DeleteContractButton.test.tsx)
 - 0012: 결과 무료 층 컴포넌트 (FreeTier) — 타임라인·5% 상한 카드 (files: src/components/result/FreeTier.tsx, src/components/result/FreeTier.test.tsx)
+- 0013: 월세 전환 카드·기준금리 BottomSheet (ConversionCard) (files: src/components/result/ConversionCard.tsx, src/components/result/BaseRateSheet.tsx, src/components/result/ConversionCard.test.tsx)
 
 ## Available exports from existing files
 // src/App.tsx
@@ -364,17 +365,19 @@ export function TossPurchase({
 // src/components/TossRewardAd.tsx
 export function TossRewardAd({
 
+// src/components/result/BaseRateSheet.tsx
+export function BaseRateSheet({
+
+// src/components/result/ConversionCard.tsx
+export function ConversionCard({ contract, today }: { contract: Contract; today: string }) {
+
 // src/components/result/FreeTier.tsx
 export function FreeTier({ contract, today }: { contract: Contract; today: string }) {
 
 // src/constants/law.ts
 export const RENEWAL_START_MONTHS = 6; // 제6조의3 제1항
 export const RENEWAL_END_MONTHS = 2; // 제6조의3 제1항
-export const INCREASE_CAP_PERCENT = 5; // 제7조 제2항
-export const CONVERSION_CAP_PERCENT = 10; // 제7조의2 제1호
-export const CONVERSION_SPREAD_PERCENT = 2; // 시행령 제9조 제2항
-export const MAX_CONTRACTS = 20;
-export const DEFAULT_BA
+export
 
 ## Memory Index (자동 학습 — 힌트로만 사용, 실제 코드 확인 필수)
 
