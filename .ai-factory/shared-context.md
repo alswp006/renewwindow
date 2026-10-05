@@ -213,6 +213,8 @@ export interface RouteState {
     ContractForm.tsx
     CountUp.tsx
     DateField.tsx
+    DeleteContractButton.test.tsx
+    DeleteContractButton.tsx
     FloatingTabBar.tsx
     MiniBar.tsx
     NotFoundState.tsx
@@ -281,7 +283,7 @@ export interface RouteState {
 - review.ts: export function requestReviewOnce(key: string = REVIEW_REQUESTED_KEY): void
 - settingsStorage.ts: export const SETTINGS_KEY = 'renewwindow:settings:v1'; export const SETTINGS_CORRUPT_KEY = 'renewwindow:settings:corrupt'; export const CHECKLIST_KEY = 'renewwindow:checklist:v1'; export const CHECKLIST_CORRUPT_KEY = 'renewwindow:checklist:corrupt'; export function loadSettings(): Settings; export function saveSettings(settings: Settings): SaveResult; export function loadChecklist(): ChecklistState; export function saveChecklist(contractId: string, checkedIds: string[]): SaveResult
 - share.ts: export interface ShareAppOptions; export async function shareApp(opts: ShareAppOptions): Promise<void>
-- storage.ts: export function getItem<T>(key: string): T | null; export function setItem<T>(key: string, value: T): void; export function removeItem(key: string): void; export const CONTRACTS_KEY = 'renewwindow:contracts:v1'; export const CONTRACTS_CORRUPT_KEY = 'renewwindow:contracts:corrupt'; export type ContractDraft = Omit<Contract, 'id' | 'createdAt' | 'updatedAt'> &; ...
+- storage.ts: export function getItem<T>(key: string): T | null; export function setItem<T>(key: string, value: T): void; export function removeItem(key: string): void; export const CONTRACTS_KEY = 'renewwindow:contracts:v1'; export const CONTRACTS_CORRUPT_KEY = 'renewwindow:contracts:corrupt'; export type Contr...
 CRITICAL: Before creating any new function, type, or component, check the list above. If something similar exists, import and use it.
 
 ## Already Implemented (do NOT duplicate or overwrite)
@@ -293,6 +295,7 @@ CRITICAL: Before creating any new function, type, or component, check the list a
 - 0006: 상태 훅 — useContracts·useContract·useSettings·useChecklist (files: src/hooks/useContracts.ts, src/hooks/useSettings.ts, src/hooks/useChecklist.ts, src/hooks/hooks.test.tsx)
 - 0007: 공용 입력 필드 — 금액·날짜 TextField, 계약 없음 상태 (files: src/components/AmountField.tsx, src/components/DateField.tsx, src/components/NotFoundState.tsx, src/components/fields.test.tsx)
 - 0009: 계약 입력 폼 컴포넌트 (ContractForm) (files: src/components/ContractForm.tsx, src/components/ContractForm.test.tsx)
+- 0010: 계약 삭제 버튼·확인 다이얼로그 (DeleteContractButton) (files: src/components/DeleteContractButton.tsx, src/components/DeleteContractButton.test.tsx)
 
 ## Available exports from existing files
 // src/App.tsx
@@ -322,6 +325,9 @@ export function CountUp({
 
 // src/components/DateField.tsx
 export function DateField({
+
+// src/components/DeleteContractButton.tsx
+export function DeleteContractButton({
 
 // src/components/FloatingTabBar.tsx
 export type TabItem = {
@@ -367,11 +373,7 @@ export const DEFAULT_BASE_RATE = 2.5;
 export const DEFAULT_BASE_RATE_AS_OF = '2026-10-06';
 export const CHECKLIST_ITEMS: ChecklistItem[] = [
 
-// src/constants/routes.ts
-export const paths = {
-
-// src/hooks/useChecklist.ts
-export int
+// src/
 
 ## Memory Index (자동 학습 — 힌트로만 사용, 실제 코드 확인 필수)
 
