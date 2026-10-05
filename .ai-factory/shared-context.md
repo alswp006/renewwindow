@@ -82,8 +82,121 @@ export type computeConversio
 
 ## Shared Types Contract (IMPORT these, do NOT redefine)
 ```typescript
-// Domain types — add your app-specific types here
-export {};
+// Domain types — SPEC Data Models. 런타임 export 금지(type/interface만).
+
+export interface LandlordNotice {
+  noticeDate: string;
+  newDeposit: number;
+  newMonthlyRent: number;
+  inputMode: 'rate' | 'amount';
+  checkedAt: string;
+}
+
+export interface Contract {
+  id: string;
+  nickname: string;
+  endDate: string;
+  deposit: number;
+  monthlyRent: number;
+  renewalRightUsed: boolean;
+  lastIncreaseDate?: string;
+  notice?: LandlordNotice;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface Settings {
+  baseRatePercent: number;
+  baseRateAsOf: string;
+}
+
+export type ChecklistState = Record<string, string[]>;
+
+export interface ChecklistItem {
+  id: string;
+  title: string;
+  source: string;
+}
+
+export type WindowStatus = 'upcoming' | 'open' | 'closed' | 'expired';
+
+export type NoticeTiming = 'before_period' | 'in_period' | 'after_period';
+
+export interface RenewalWindow {
+  startDate: string;
+  deadlineDate: string;
+  endDate: string;
+  status: WindowStatus;
+  daysToStart: number;
+  daysToDeadline: number;
+  daysToEnd: number;
+}
+
+export interface CapResult {
+  maxDeposit: number;
+  maxMonthlyRent: number;
+  depositIncrease: number;
+  rentIncrease: number;
+}
+
+export interface NoticeCheck {
+  depositRatePercent: number | null;
+  rentRatePercent: number | null;
+  depositOver: number;
+  rentOver: number;
+  isOverCap: boolean;
+  noticeTiming: NoticeTiming;
+  withinOneYearOfIncrease: boolean;
+}
+
+export interface ConversionResult {
+  ratePercent: number;
+  addedRent: number;
+  remainingDeposit: number;
+  newMonthlyRent: number;
+}
+
+export interface ScenarioRow {
+  percent: number;
+  remainingDeposit: number;
+  monthlyRentCap: number;
+  annualRent: number;
+}
+
+/** 계약 입력 폼의 원본 값(숫자 필드도 문자열) */
+export interface ContractInput {
+  nickname: string;
+  endDate: string;
+  deposit: string;
+  monthlyRent: string;
+  lastIncreaseDate: string;
+  renewalRightUsed: boolean;
+}
+
+export type FieldErrors = Record<string, string>;
+
+export interface SaveResult {
+  ok: boolean;
+  error?: string;
+  quota?: boolean;
+}
+
+export interface SaveContractResult extends SaveResult {
+  id?: string;
+}
+
+export interface LoadContractsResult {
+  contracts: Contract[];
+  recovered: boolean;
+}
+
+export interface RouteState {
+  '/': { toast?: string } | null;
+  '/contracts/new': null;
+  '/contracts/:id': { justSaved?: boolean } | null;
+  '/contracts/:id/edit': null;
+  '/contracts/:id/notice': null;
+}
 
 ```
 
@@ -105,9 +218,13 @@ export {};
     SummaryHero.tsx
     TossPurchase.tsx
     TossRewardAd.tsx
+  constants/
+    law.ts
+    routes.ts
   hooks/
   lib/
     analytics.ts
+    contract.ts
     review.ts
     share.ts
     storage.ts
@@ -128,9 +245,11 @@ export {};
 
 ### Exports (src/lib/)
 - analytics.ts: export type LogFields = Record<string, string | number | boolean | null>; export const DWELL_MS = 3000; export function fireAndForget(call: () => unknown): void; export function logScreen(page: string, extra?: LogFields): void; export function logClick(name: string, extra?: LogFields): void; export function logImpression(name: string, extra?: LogFields): void; export function useScreenLog(page: string): void
+- contract.ts: export type Contract =; export type ContractInput =; export type Settings =; export type RenewalWindow =; export type NoticeCheck =; export type Scenario =; export type Checklist =; export type SaveResult =
 - review.ts: export function requestReviewOnce(key: string = REVIEW_REQUESTED_KEY): void
 - share.ts: export interface ShareAppOptions; export async function shareApp(opts: ShareAppOptions): Promise<void>
 - storage.ts: export function getItem<T>(key: string): T | null; export function setItem<T>(key: string, value: T): void; export function removeItem(key: string): void
+- types.ts: export interface LandlordNotice; export interface Contract; export interface Settings; export type ChecklistState = Record<string, string[]>; export interface ChecklistItem; export type WindowStatus = 'upcoming' | 'open' | 'closed' | 'expired'; export type NoticeTiming = 'before_period' | 'in_period' | 'after_period'; export interface RenewalWindow
 - utils.ts: export function cn(...classes: (string | boolean | undefined | null)[]): string; export function formatNumber(n: number): string; export function formatCurrency(n: number, currency = 'KRW'): string
 
 ### Components (src/components/)
@@ -149,6 +268,9 @@ export {};
 - TossPurchase.tsx: TossPurchase
 - TossRewardAd.tsx: TossRewardAd
 CRITICAL: Before creating any new function, type, or component, check the list above. If something similar exists, import and use it.
+
+## Already Implemented (do NOT duplicate or overwrite)
+- 0001: 타입·법령 상수·경로 상수·테스트 환경 (files: src/lib/types.ts, src/constants/law.ts, src/constants/routes.ts, vitest.config.ts, package.json)
 
 ## Available exports from existing files
 // src/App.tsx
@@ -200,18 +322,27 @@ export function TossPurchase({
 // src/components/TossRewardAd.tsx
 export function TossRewardAd({
 
+// src/constants/law.ts
+export const RENEWAL_START_MONTHS = 6; // 제6조의3 제1항
+export const RENEWAL_END_MONTHS = 2; // 제6조의3 제1항
+export const INCREASE_CAP_PERCENT = 5; // 제7조 제2항
+export const CONVERSION_CAP_PERCENT = 10; // 제7조의2 제1호
+export const CONVERSION_SPREAD_PERCENT = 2; // 시행령 제9조 제2항
+export const MAX_CONTRACTS = 20;
+export const DEFAULT_BASE_RATE = 2.5;
+export const DEFAULT_BASE_RATE_AS_OF = '2026-10-06';
+export const CHECKLIST_ITEMS: ChecklistItem[] = [
+
+// src/constants/routes.ts
+export const paths = {
+
 // src/lib/analytics.ts
 export type LogFields = Record<string, string | number | boolean | null>;
 export const DWELL_MS = 3000;
 export function fireAndForget(call: () => unknown): void {
 export function logScreen(page: string, extra?: LogFields): void {
 export function logClick(name: string, extra?: LogFields): void {
-export function logImpression(name: string, extra?: LogFields): void {
-export function useScreenLog(page: string): void {
-
-// src/lib/contract.ts
-export type Contract = { id: string; nickname: string; endDate: string; deposit: number; monthlyRent: number; lastIncreaseDate?: string; useRenewalRight: boolean; notice?: { noticeDate: string; depositRatePercent: number | null; rentRatePercent: number | null; checkedAt: string } };
-export type ContractInput = { nickname: string; endDate: string; deposit: string; monthlyRent: string; lastIncreaseDate: string
+export function logImpression(name: strin
 
 ## Memory Index (자동 학습 — 힌트로만 사용, 실제 코드 확인 필수)
 
